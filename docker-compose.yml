@@ -1,0 +1,41 @@
+version: '2.3'
+services:
+
+  cuda:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    container_name: cuda
+    working_dir: /application
+#    command: bash -c "cd /application/data && mkdir -p {history,hls,logs,record,thumbs} && chmod a+rwx history hls logs record thumbs && /opt/nginx/sbin/nginx"
+#    command: bash -c "tail -f /dev/null"
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - ./:/application/:rw
+      - ./docker/services/nginx/nginx-cuda.conf:/opt/nginx/nginx.conf
+      - ./docker/services/nginx/.htpasswd:/opt/nginx/etc/.htpasswd
+    ports:
+      - "82:8081"
+      - "1935:1935"
+    networks:
+      sbnet:
+        ipv4_address: 10.13.0.2
+    extra_hosts:
+      - "joy2cam.loc:10.13.0.1"
+
+networks:
+  sbnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.13.0.0/16
+
+volumes:
+  static-content-history:
+  static-content-hls:
+  static-content-logs:
+  static-content-record:
+  static-content-thumbs:
