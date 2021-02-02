@@ -10,6 +10,7 @@ services:
 #    command: bash -c "cd /application/data && mkdir -p {history,hls,logs,record,thumbs} && chmod a+rwx history hls logs record thumbs && /opt/nginx/sbin/nginx"
 #    command: bash -c "tail -f /dev/null"
     runtime: nvidia
+    restart: always
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
