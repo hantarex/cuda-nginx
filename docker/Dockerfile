@@ -1,6 +1,8 @@
-FROM cuda
+#FROM hantarex/cuda_nginx:first
+#FROM gst:1.19.0
+FROM cuda-nginx-gst
 
-RUN mkdir /www
+RUN mkdir -p /www
 ADD static /www/static
 
 EXPOSE 1935
