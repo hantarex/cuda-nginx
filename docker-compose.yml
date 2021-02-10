@@ -17,7 +17,7 @@ services:
     volumes:
       - ./:/application/:rw
       - ./docker/services/nginx/nginx-cuda-gst.conf:/opt/nginx/nginx.conf
-      - ./docker/services/nginx/.htpasswd:/opt/nginx/etc/.htpasswd
+#      - ./docker/services/nginx/.htpasswd:/opt/nginx/etc/.htpasswd
     ports:
       - "82:8081"
       - "1935:1935"
