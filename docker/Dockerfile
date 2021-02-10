@@ -4,6 +4,9 @@ FROM cuda-nginx-gst
 
 RUN mkdir -p /www
 ADD static /www/static
+RUN mkdir -p /usr/local/bin /patched-lib
+COPY patch.sh docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/patch.sh /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 1935
 EXPOSE 8081
@@ -15,8 +18,8 @@ EXPOSE 8081
 #FROM cuda
 
 
-
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["tail", "-f", "/dev/null"]
 
 #--enable-nonfree --enable-cuda-sdk --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
 
